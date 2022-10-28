@@ -1,2 +1,2 @@
 # Escuelas-sin-bullying-app-movil
-Repositorio del proyecto de TSP - APP-MOVIL
+Repositorio del proyecto de TSP - APP_MOVIL

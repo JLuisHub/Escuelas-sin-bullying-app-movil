@@ -9,7 +9,7 @@ const ReportsRecord = ({route, navigation}) => {
     onPressAddReport = () => {
     
         navigation.navigate('Report', {id_docente: id_docente, id_estudiante: id_estudiante,
-          nombre: nombre, matricula: matricula, refresh: this.reportsList.checkData})
+          nombre: nombre, matricula: matricula, refresh: this.reportsList.getData})
     }
 
     onPressAddSummon = () => {

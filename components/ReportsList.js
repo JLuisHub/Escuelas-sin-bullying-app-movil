@@ -24,7 +24,7 @@ class ReportsList extends Component {
 
   getData = () => {
     this.arrayNew = []
-    this.changeRefreshState(true)
+    this.setState({isRefreshing: true})
     fetch(this.url, {
         method: 'GET'
         //Request Type
@@ -50,54 +50,7 @@ class ReportsList extends Component {
         //Error 
         console.error(error)
     })
-    this.changeRefreshState(false)
-  }
-
-  checkData = () => {
-    this.arrayNew = []
-    this.setState({isRefreshing: true})
-    fetch(this.url, {
-      method: 'GET'
-      //Request Type
-    })
-    .then((response) => response.json())
-    //If response is in json then in success
-    .then((response) => {
-        //Success      
-        response.forEach(element => {
-            tempSet = {
-                id: element['id'],
-                description: element['descripcion'],
-                date: element['fecha'],
-            }
-            this.arrayNew.push(tempSet)          
-        })
-        /*
-        if (this.arrayNew.length != this.arrayNewTemp.length) {
-          this.setState({data: []})
-          this.arrayNew = this.arrayNewTemp
-          this.arrayNewTemp = []
-        }*/
-        this.setState({data: this.arrayNew})
-    })
-    //If response is not in json then in error
-    .catch((error) => {
-        //Error 
-        console.error(error)
-    })
     this.setState({isRefreshing: false})
-  }
-
-  changeRefreshState = (currentState) => {
-    this.setState({isRefreshing: currentState})
-    console.log(this.state.isRefreshing)
-    /*
-    if (this.state.isRefreshing == true) {
-      this.setState({isRefreshing: false})
-    } else {
-      this.setState({isRefreshing: true})
-    }
-    */
   }
 
   renderSeparator = () => {

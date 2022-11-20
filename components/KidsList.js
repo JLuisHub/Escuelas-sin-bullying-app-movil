@@ -23,6 +23,7 @@ class KidsList extends Component {
   }
 
   getData = () => {
+    this.setState({isRefreshing: true})
     fetch(this.url, {
         method: 'GET'
         //Request Type
@@ -31,7 +32,7 @@ class KidsList extends Component {
     //If response is in json then in success
     .then((response) => {
         //Success
-        //const arrayTemp = []
+        this.arrayNew = []
         response.forEach(element => {
             tempSet = {
               id: element['id'],
@@ -40,7 +41,7 @@ class KidsList extends Component {
             this.arrayNew.push(tempSet)
             //console.log(this.arrayNew)
         })
-        console.log(this.props.id)
+        //console.log(this.props.id)
         this.setState({data: this.arrayNew})    
     })
     //If response is not in json then in error
@@ -48,35 +49,7 @@ class KidsList extends Component {
         //Error 
         console.error(error)
     })
-  }
-
-  checkData = () => {
-    fetch(this.url, {
-      method: 'GET'
-      //Request Type
-    })
-    .then((response) => response.json())
-    //If response is in json then in success
-    .then((response) => {
-        //Success      
-        response.forEach(element => {
-            tempSet = {
-              id: element['id'],
-              nombre: element['nombre']
-            }
-            this.arrayNewTemp.push(tempSet)          
-        })
-        if (this.arrayNew.length != this.arrayNewTemp.length) {
-          this.arrayNew = this.arrayNewTemp
-          this.arrayNewTemp = []
-        }
-        this.setState({data: this.arrayNew})
-    })
-    //If response is not in json then in error
-    .catch((error) => {
-        //Error 
-        console.error(error)
-    })
+    this.setState({isRefreshing: false})
   }
 
   renderSeparator = () => {
@@ -91,6 +64,18 @@ class KidsList extends Component {
       );
   };
 
+  renderHeader = () => {
+    return (
+      <View>
+        <View style = {styles.headerInfoCont}>
+              <Text style = {styles.headerInfoText} >
+                  Estudiantes vinculados a su cuenta
+              </Text>
+          </View>
+      </View>
+    )
+  }
+
   render() {
     
     return (
@@ -98,16 +83,15 @@ class KidsList extends Component {
         style={styles.containerView}>
           <FlatList
               style = {styles.list_cont}
-              //data={this.state.data}
               data={this.state.data}
-              //refreshing={this.state.isRefreshing}
-              //onRefresh={this.checkData}
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.getData}
               renderItem={({ item }) => (
                   <KidCard nombre={item.nombre} />
               )}
               keyExtractor={item => item.id}
               ItemSeparatorComponent={this.renderSeparator}
-              //ListHeaderComponent={this.renderHeader}
+              ListHeaderComponent={this.renderHeader}
           />
       </View>
     )
@@ -135,6 +119,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 40,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 
   button_cont: {

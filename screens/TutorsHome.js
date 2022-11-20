@@ -10,7 +10,7 @@ const TutorsHome = ({ route, navigation }) => {
 
     onPressAddStudent = () => {
         //Modificar
-        navigation.navigate('AddTutorado', {id: id_tutor, refresh: this.kidslist.checkData })
+        navigation.navigate('AddTutorado', {id: id_tutor, refresh: this.kidslist.getData })
     }
 
     onPressNotifications = () => {

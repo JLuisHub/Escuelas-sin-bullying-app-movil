@@ -77,7 +77,7 @@ class NotificationsList extends Component {
       <View>
         <View style = {styles.headerInfoCont}>
               <Text style = {styles.headerInfoText} >
-                  Reportes y citatorios
+                  {this.props.tipo}
               </Text>
           </View>
       </View>
@@ -100,6 +100,7 @@ class NotificationsList extends Component {
               keyExtractor={item => item.id}
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
+              stickyHeaderIndices={[0]}
           />
       </View>
     )
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
   headerInfoCont: {
     marginBottom: 5,
     padding: 10,
+    backgroundColor: '#F1F1F1',
   },
 
   headerInfoText: {

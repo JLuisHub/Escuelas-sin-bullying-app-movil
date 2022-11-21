@@ -4,7 +4,13 @@ import CustomButton from './CustomButton'
 import { useNavigation } from '@react-navigation/native'
 import { URL_BASE } from '@env'
 
-const KidCard = ( {nombre} ) => {
+const KidCard = ( {id_estudiante, nombre_estudiante, id_tutor} ) => {
+    const navigation = useNavigation()
+    onPressNotifications = () => {
+        navigation.navigate('Notifications', {id_tutor: id_tutor, 
+                                              id_estudiante: id_estudiante,
+                                              nombre: nombre_estudiante})
+    }
     
     return (
         <View style = {styles.cardCont}>
@@ -12,9 +18,15 @@ const KidCard = ( {nombre} ) => {
             <View style = {styles.subCardCont}>
 
                 <Text style = {styles.info}>
-                    {nombre}
-                </Text>
+                    {nombre_estudiante}
+                </Text>            
 
+            </View>
+            <View style = {styles.buttonCont}>
+                <CustomButton text = "Eliminar"/>
+            </View>
+            <View style = {styles.buttonCont}>
+                <CustomButton text = "Notificaciones" onPress = {onPressNotifications}/>
             </View>
 
         </View>
@@ -23,11 +35,12 @@ const KidCard = ( {nombre} ) => {
 
 const styles = StyleSheet.create({
     cardCont: {
-        marginVertical: 20
+        flexDirection: 'row',
+        marginVertical: 20,
     },
 
     subCardCont: {
-        flexDirection: 'row'
+        flex: 3,
     },
 
     infoHeader: {

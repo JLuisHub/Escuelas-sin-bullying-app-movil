@@ -1,14 +1,18 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, ToastAndroid } from 'react-native'
+import React, { useState } from 'react'
 import CustomButton from './CustomButton'
 import { useNavigation } from '@react-navigation/native'
 import { URL_BASE } from '@env'
+import LoadingScreen from '../screens/LoadingScreen'
 
 const ReportCard = ( {id, desc, date, matricula, nombre, refresh} ) => {
+
+    const [ loading, setLoading] = useState(false)
 
     const navigation = useNavigation()
 
     const onDeletePress = () => {
+        setLoading(true)
         fetch('http://'+ URL_BASE +'/api/v1/docente/reporte/' + id, {
           method: 'DELETE'
           //Request Type
@@ -17,7 +21,8 @@ const ReportCard = ( {id, desc, date, matricula, nombre, refresh} ) => {
         //If response is in json then in success
         .then((response) => {
             //Success
-            alert(response)
+            ToastAndroid.showWithGravity(response,ToastAndroid.LONG,ToastAndroid.BOTTOM)
+            //alert(response)
             })
         //If response is not in json then in error
         .catch((error) => {
@@ -25,11 +30,15 @@ const ReportCard = ( {id, desc, date, matricula, nombre, refresh} ) => {
             console.error(error)
         })
 
-        {refresh()}
+        setTimeout(() => {
+            {refresh()}
+            setLoading(false)
+        }, 1000);
     }
     
     return (
         <View style = {styles.cardCont}>
+            {loading && (<LoadingScreen/>)}
 
             <View style = {styles.subCardCont}>
 

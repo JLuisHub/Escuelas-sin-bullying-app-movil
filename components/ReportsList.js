@@ -93,6 +93,7 @@ class ReportsList extends Component {
               keyExtractor={item => item.id}
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
+              stickyHeaderIndices={[0]}
           />
       </View>
     )
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
   headerInfoCont: {
     marginBottom: 5,
     padding: 10,
+    backgroundColor: '#F1F1F1',
   },
 
   headerInfoText: {

@@ -9,13 +9,7 @@ const TutorsHome = ({ route, navigation }) => {
     console.log(id_tutor)
 
     onPressAddStudent = () => {
-        //Modificar
         navigation.navigate('AddTutorado', {id: id_tutor, refresh: this.kidslist.getData })
-    }
-
-    onPressNotifications = () => {
-        //Modificar
-        navigation.navigate('Notifications', {id: id_tutor})
     }
 
     return (
@@ -27,13 +21,15 @@ const TutorsHome = ({ route, navigation }) => {
             <View style = {styles.button_cont}>
               <CustomButton text = "Agregar" onPress = {onPressAddStudent} />
             </View>
-            <View style = {styles.button_cont}>
-              <CustomButton text = "Notificaciones" onPress = {onPressNotifications} />
-            </View>
           </View>
 
         </View>
     );
+    /*
+    <View style = {styles.button_cont}>
+      <CustomButton text = "Notificaciones" onPress = {onPressNotifications} />
+    </View>
+    */
 }
 
 const styles = StyleSheet.create({

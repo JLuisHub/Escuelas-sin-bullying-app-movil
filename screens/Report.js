@@ -1,25 +1,30 @@
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, ScrollView, ToastAndroid } from 'react-native'
 import React, {useState} from 'react'
 import CustomButton from '../components/CustomButton'
 import {URL_BASE} from '@env'
+import LoadingScreen from './LoadingScreen'
 
 function Report ({ route, navigation }) {
     // id, nombre y matricula del alumno pasada por parametros
     const { id_docente, id_estudiante, nombre, matricula, refresh } = route.params
     const [ descripcion, setDescripcion ] = useState('')
+    const [ loading, setLoading ] = useState(false)
 
     const now = new Date()
     
 
     const onSavePress = () => {
-
+        setLoading(true)
         var Id_docente = id_docente;
         var Id_estudiante = id_estudiante;
         var Descripcion = descripcion;
         var Fecha = now.getDate() + '/' + now.getMonth() + '/' + now.getFullYear()
     
         if ((descripcion.length==0)){
-          alert("Es necesario colocar una descripción!");
+          ToastAndroid.showWithGravity("Es necesario colocar una descripción!",
+                                   ToastAndroid.LONG,
+                                   ToastAndroid.BOTTOM)
+          //alert("Es necesario colocar una descripción!");
         }else{
           var APIURL = 'http://'+URL_BASE+'/api/v1/docente/reporte';
     
@@ -43,20 +48,26 @@ function Report ({ route, navigation }) {
           .then((Response)=>Response.json())
           .then((Response)=>{
             //API_TOKEN=Response
-            alert(Response.message)
+            ToastAndroid.showWithGravity(Response.message,ToastAndroid.LONG,ToastAndroid.BOTTOM)
+            //alert(Response.message)
           })
           .catch((error)=>{
             console.error("ERROR FOUND" + error);
           })
         }
 
-        navigation.goBack()
-        {refresh()}
+        
+        setTimeout(() => {
+          setLoading(false)
+          navigation.goBack()
+          {refresh()}
+        }, 1000);
     }
     
 
   return (
     <ScrollView style = {styles.mainCont}>
+      {loading && (<LoadingScreen/>)}
       <View style = {styles.doubleColumn}>
         <Text style = {styles.title}>Reporte para: </Text>
         <Text style = {styles.title} >{nombre}</Text>

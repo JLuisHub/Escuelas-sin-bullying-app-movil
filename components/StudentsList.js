@@ -96,6 +96,7 @@ class StudentsList extends Component {
           keyExtractor={item => item.id}
           //ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
+          stickyHeaderIndices={[0]}
         />
       </View>
     );

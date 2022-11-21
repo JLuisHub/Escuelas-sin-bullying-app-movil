@@ -87,11 +87,12 @@ class KidsList extends Component {
               refreshing={this.state.isRefreshing}
               onRefresh={this.getData}
               renderItem={({ item }) => (
-                  <KidCard nombre={item.nombre} />
+                  <KidCard id_estudiante = {item.id} nombre_estudiante = {item.nombre} id_tutor = {this.props.id} />
               )}
               keyExtractor={item => item.id}
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
+              stickyHeaderIndices={[0]}
           />
       </View>
     )
@@ -100,7 +101,7 @@ class KidsList extends Component {
 
 const styles = StyleSheet.create({
   containerView: {
-    padding: 20,
+    paddingVertical: 20,
     width: '98%',
     alignSelf: 'center',
     justifyContent: 'center',
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
   headerInfoCont: {
     marginBottom: 5,
     padding: 10,
+    backgroundColor: '#F1F1F1',
   },
 
   headerInfoText: {

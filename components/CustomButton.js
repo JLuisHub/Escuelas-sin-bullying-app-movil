@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "white",
         fontWeight: '600',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        textAlign: 'center',
     }
 
 })

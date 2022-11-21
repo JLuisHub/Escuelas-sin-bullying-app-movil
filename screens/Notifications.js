@@ -1,12 +1,22 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import NotificationsList from '../components/NotificactionsList'
+import LoadingScreen from './LoadingScreen'
 
 const Notifications = ({route, navigation}) => {
-    const {id_tutor, id_estudiante, nombre} = route.params
+    const {id_tutor, id_estudiante} = route.params
+    const [loading, setLoading] = useState(false)
+
+    const loadingData = () => {
+        setLoading(true); 
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000);
+    }
 
     return (
-        <View style= {styles.lists_cont}>
+        <View style= {styles.lists_cont} onLayout={loadingData}>
+            {loading && (<LoadingScreen/>)}
             <View style= {styles.list_cont}>
                 <NotificationsList id={id_tutor} 
                                    id_estudiante={id_estudiante} 

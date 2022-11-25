@@ -1,5 +1,5 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import ReportCard from './ReportCard'
 import { useNavigation, useFocusEffect} from '@react-navigation/native'
 import { URL_BASE } from '@env'
@@ -8,18 +8,19 @@ import Notification from './Notification'
 class NotificationsList extends Component {
   constructor(props) {
     super(props)
-    this.url = "http://"+ URL_BASE +"/api/v1/tutor_legal/notificaciones/" + this.props.id
+    //this.url = "http://"+ URL_BASE +"/api/v1/tutor_legal/notificaciones/" + this.props.id
     this.getData = this.getData.bind(this)
-    /*
+    
     if (this.props.tipo === 'Reportes') {
       //Direccion de API que regresa los reportes de los hijos de un tutor por su id
-      //this.url = 'http://'+ URL_BASE +'/api/reportes/estudiante/' + this.props.id
+      this.url = 'http://'+ URL_BASE +'/api/v1/tutor_legal/notificacionesReporte/' + this.props.id_estudiante
     } else {
       //Direccion de API que regresa los citatorios de los hijos de un tutor por su id
-      //this.url = 'http://'+ URL_BASE +'/api/reportes/estudiante/' + this.props.id
-    }*/
+      this.url = 'http://'+ URL_BASE +'/api/v1/tutor_legal/notificacionesCitatorio/' + this.props.id_estudiante
+    }
     this.state = {
        data: [],
+       isRefreshing: false,
     }
     //Este array en realidad va cargar los reportes traidos por una query
     this.arrayNew = [];
@@ -27,6 +28,8 @@ class NotificationsList extends Component {
   }
 
   getData = () => {
+    this.setState({isRefreshing: true})
+    this.arrayNew = [];
     fetch(this.url, {
         method: 'GET'
         //Request Type
@@ -55,6 +58,7 @@ class NotificationsList extends Component {
         //Error 
         console.error(error)
     })
+    this.setState({isRefreshing: false})
   }
 
   renderSeparator = () => {
@@ -90,9 +94,11 @@ class NotificationsList extends Component {
               style = {styles.list_cont}
               data={this.state.data}
               //data={this.arrayNew}
+              refreshing = {this.state.isRefreshing}
+              onRefresh={this.getData}
               renderItem={({ item }) => (
                   <Notification asunto = {item.asunto} 
-                  desc = {item.description} fecha = {item.fecha} refresh = {this.getData}/>
+                  desc = {item.description} fecha = {item.fecha} refresh = {this.getData} id_noti = {item.id}/>
               )}
               keyExtractor={item => item.id}
               ItemSeparatorComponent={this.renderSeparator}

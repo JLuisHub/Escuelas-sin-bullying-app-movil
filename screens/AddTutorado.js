@@ -6,7 +6,6 @@ import CustomButton from '../components/CustomButton'
 
 import LoadingScreen from './LoadingScreen'
 
-import {useNavigation} from '@react-navigation/native'
 import {URL_BASE} from '@env'
 
 const AddTutorado = ({route, navigation}) => {
@@ -20,12 +19,6 @@ const AddTutorado = ({route, navigation}) => {
   //const navigation = useNavigation()
 
   const onSavePress = () => {
-      
-      InsertRecord()
-  }
-
-  InsertRecord=()=>{
-    setLoading(true)
     var Id_tutor = id
     var Clave = clave;
     var Matricula = matricula;
@@ -36,6 +29,7 @@ const AddTutorado = ({route, navigation}) => {
                                    ToastAndroid.LONG,
                                    ToastAndroid.BOTTOM)
     }else{
+      setLoading(true)
       var APIURL = url;
 
       var headers = {
@@ -57,6 +51,7 @@ const AddTutorado = ({route, navigation}) => {
       })
       .then((Response)=>Response.json())
       .then((Response)=>{
+        console.log(Response)
         ToastAndroid.showWithGravity(Response.message,
                                        ToastAndroid.LONG,
                                        ToastAndroid.BOTTOM)
@@ -64,12 +59,12 @@ const AddTutorado = ({route, navigation}) => {
       .catch((error)=>{
         console.error("ERROR FOUND" + error);
       })
+      setTimeout(() => {
+        {refresh()}
+        setLoading(false)
+        navigation.goBack()
+      }, 1000);
     }
-    setTimeout(() => {
-      {refresh()}
-      setLoading(false)
-      navigation.goBack()
-    }, 1000);
   }
 
   return (

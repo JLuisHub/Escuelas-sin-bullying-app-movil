@@ -1,22 +1,23 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import CustomButton from './CustomButton'
 import { useNavigation } from '@react-navigation/native'
 import { URL_BASE } from '@env'
 import LoadingScreen from '../screens/LoadingScreen'
 
-const KidCard = ( {id_estudiante, nombre_estudiante, id_tutor} ) => {
+const KidCard = ( {id_estudiante, nombre_estudiante, id_tutor, refresh} ) => {
     const navigation = useNavigation()
     const [loading, setLoading] = useState(false)
-    onPressNotifications = () => {
+
+    const onPressNotifications = () => {
         navigation.navigate('Notifications', {id_tutor: id_tutor, 
                                               id_estudiante: id_estudiante})
     }
 
     const onDeletePress = () => {
         setLoading(true)
-        //Aun falta poner el URL del API
-        fetch('http://'+ URL_BASE +'/URLDELAPI/' + id, {
+        const url = 'http://'+ URL_BASE +'/api/v1/tutor_legal/' + id_tutor + '/' + id_estudiante
+        fetch(url, {
           method: 'DELETE'
           //Request Type
         })
@@ -24,8 +25,8 @@ const KidCard = ( {id_estudiante, nombre_estudiante, id_tutor} ) => {
         //If response is in json then in success
         .then((response) => {
             //Success
-            ToastAndroid.showWithGravity(response,ToastAndroid.LONG,ToastAndroid.BOTTOM)
-            //alert(response)
+            console.log(response)
+            ToastAndroid.showWithGravity(response.message,ToastAndroid.LONG,ToastAndroid.BOTTOM)
             })
         //If response is not in json then in error
         .catch((error) => {
@@ -51,7 +52,7 @@ const KidCard = ( {id_estudiante, nombre_estudiante, id_tutor} ) => {
 
             </View>
             <View style = {styles.buttonCont}>
-                <CustomButton text = "Eliminar"/>
+                <CustomButton text = "Desvincular" onPress = {onDeletePress}/>
             </View>
             <View style = {styles.buttonCont}>
                 <CustomButton text = "Notificaciones" onPress = {onPressNotifications}/>

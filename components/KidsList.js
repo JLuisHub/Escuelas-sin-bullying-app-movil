@@ -10,13 +10,13 @@ class KidsList extends Component {
     //Falta poner el api que regresa a los estudiantes vinculados con un tutor por su id
     this.url = "http://"+ URL_BASE +"/api/v1/tutor_legal/tutorados/" + this.props.id
     //this.interval = setInterval(() => this.checkData(), 1000);
+    this.getData = this.getData.bind(this)
   
     this.state = {
        data: [],
        isRefreshing: false,
     }
-    //Este array en realidad va cargar los reportes traidos por una query
-    //{id:1, nombre: "Pepito"}, {id:2, nombre: "Maria"}, {id:3, nombre: "Jose"}, {id:4, nombre: "Martha"}
+    
     this.arrayNew = [];
     this.arrayNewTemp = [];
     this.getData()
@@ -87,7 +87,10 @@ class KidsList extends Component {
               refreshing={this.state.isRefreshing}
               onRefresh={this.getData}
               renderItem={({ item }) => (
-                  <KidCard id_estudiante = {item.id} nombre_estudiante = {item.nombre} id_tutor = {this.props.id} />
+                  <KidCard id_estudiante = {item.id} 
+                           nombre_estudiante = {item.nombre}
+                           id_tutor = {this.props.id} 
+                           refresh = {this.getData}/>
               )}
               keyExtractor={item => item.id}
               ItemSeparatorComponent={this.renderSeparator}

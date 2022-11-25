@@ -13,7 +13,7 @@ const SignInScreen = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false)
 
-  const urlTutorRegistro = "http://"+ URL_BASE +"/tutor_legal/register_view"
+  const urlTutorRegistro = "http://"+ URL_BASE +"/tutor_legal/registro/create"
   const urlLogin = "http://"+ URL_BASE +"/api/v1/tutor_legal_docente/login"
 
   const navigation = useNavigation()

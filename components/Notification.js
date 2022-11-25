@@ -5,13 +5,13 @@ import { useNavigation } from '@react-navigation/native'
 import { URL_BASE } from '@env'
 import LoadingScreen from '../screens/LoadingScreen'
 
-const Notification = ( {id, asunto, desc, fecha, refresh} ) => {
+const Notification = ( {id_noti, asunto, desc, fecha, refresh} ) => {
     const [ loading, setLoading ] = useState(false)
 
     const onPressDelete = () => {
         setLoading(true)
         //Aun falta poner el URL del API
-        fetch('http://'+ URL_BASE +'/URLDELAPI/' + id, {
+        fetch('http://'+ URL_BASE +'/api/v1/tutor_legal/citatorio_eliminar/' + id_noti, {
           method: 'DELETE'
           //Request Type
         })
@@ -27,10 +27,9 @@ const Notification = ( {id, asunto, desc, fecha, refresh} ) => {
             //Error 
             console.error(error)
         })
-
         setTimeout(() => {
-            {refresh()}
             setLoading(false)
+            {refresh()}
         }, 1000);
     }
 

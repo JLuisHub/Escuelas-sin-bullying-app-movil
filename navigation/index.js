@@ -13,16 +13,20 @@ import LoadingScreen from '../screens/LoadingScreen'
 import TutorsHome from '../screens/TutorsHome'
 import Notifications from '../screens/Notifications'
 import AddTutorado from '../screens/AddTutorado'
+import ChangePassword from '../screens/ChangePassword'
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   return (
-    <NavigationContainer >
+    <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: true}}>
           
         <Stack.Screen name="SignIn" component={SignInScreen} 
           options={HeaderStack("Escuela Sin Bullying")} />
+
+        <Stack.Screen name="chgPass" component={ChangePassword} 
+          options={HeaderStack("Cambio de Contraseña")} />
 
         <Stack.Screen name="TutorsHome" component={TutorsHome} 
           options={HeaderStack("Escuela Sin Bullying")} />

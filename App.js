@@ -1,17 +1,11 @@
 import {
-	ActivityIndicator,
-	SafeAreaView,
 	StyleSheet,
-	Text,
 	View,
 } from 'react-native';
 
-//import { StatusBar } from 'expo-status-bar';
-
 import React from 'react';
 import Navigation from './navigation';
-import ProfessorsHome from './screens/ProfessorsHome';
-import SignInScreen from './screens/SignInScreen';
+
 
 const App = () => {
 	return (
